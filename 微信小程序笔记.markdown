@@ -1,2 +1,33 @@
 # flex布局
 1. 微信小程序对flex布局支持度很好
+2. 使用flex-direction定义row行/column列(默认)实现排列方向,还有row-reverse/column-reverse倒序
+3. 容器宽度100% 高度自适应 
+4. 使用justify-content(主轴上对齐):flex-start(默认)/flex-end/center居中显示/sapce-between平均分布占据一整列或一整行/space-around等距分布,控制flex-item排列方向,并且受flex-direction影响
+5. 使用align-items(交叉轴上对齐):flex-start(默认)/flex-end/center居中显示/sapce-between/baseline(元素文字的基线对齐)/stretch
+6. 使用flex-wrap:nowrap(默认)不换行/wrap换行/来实现消除间距换行,多余元素把剩余空间等距分布
+7. flex-wrap消除间距的办法:设置好宽高/用虚拟容器替代
+8. 容器设置成flex,元素会取消块状特性,但容器的块特性不会消除
+
+# 组件Components
+1. 复用性高的代码可以写成一个组件,然后在page里面使用component
+```
+<!-- page页面的引用 json文件 -->
+
+{
+	"usingComponents":{
+		"组件的名字(自行规定命名规范)":"路径地址"
+	}
+}
+
+<!-- page页面 的使用 wxml-->
+	<组件的名字>
+```
+
+2. 配置项目的相对路径和绝对路径
+3. 小程序尺寸单位和设计原则:设计图一般以iphone6为基准设计(长750rpx高1300rpx),则px的比例为2倍rpx. 
+4. rpx尺寸单位特性可以实现自适应(根据屏幕大小变化而变化),px相对于各种屏幕保持显示大小不变:例如字体可以设置为px而不随屏幕大小变化.
+5. 小程序可以通过设置page属性进行样式处理,从而实现全局的样式控制(page是小程序默认包裹的全局容器)
+6. 组件可以继承的样式:font/color
+7. 组件最好不要留有空白间距(无意义的空白/间距)
+8. 让组件自适应宽display:inline-flex	
+9. bind事件绑定不会阻止冒泡事件向上冒泡,catch事件绑定会阻止冒泡事件向上冒泡
