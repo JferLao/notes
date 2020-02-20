@@ -31,3 +31,25 @@
 7. 组件最好不要留有空白间距(无意义的空白/间距)
 8. 让组件自适应宽display:inline-flex	
 9. bind事件绑定不会阻止冒泡事件向上冒泡,catch事件绑定会阻止冒泡事件向上冒泡
+
+# 数据来源的三种方式
+1. wxml
+2. js > wxml
+3. 服务器 > js >wxml
+
+# 组件使用
+1. 组件的初始数据写在Component内的data属性中,在wxml使用时为:{{表达式/变量名}}
+2. 组件的开放数据或者属性可以在Component内的properties属性中定义供外部使用
+3. 组件具有开放性和封装性
+```
+properties:{
+	like:{
+		type:Boolean,  //type为必填值
+		value:默认初始值	 //非必填值
+		observer:function(){}	//非必填值
+}
+使用this.setData({})进行数据绑定变更
+<!--使用  -->
+this.properties.like
+```
+
