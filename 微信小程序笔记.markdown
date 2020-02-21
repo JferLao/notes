@@ -31,6 +31,7 @@
 7. 组件最好不要留有空白间距(无意义的空白/间距)
 8. 让组件自适应宽display:inline-flex	
 9. bind事件绑定不会阻止冒泡事件向上冒泡,catch事件绑定会阻止冒泡事件向上冒泡
+10. 组件属性赋值和页面渲染流程:API>page JS>通过setData设置page中的WXML对应组件属性或者直接显示>数据流向组件的Property然后对组件数据进行渲染>通过setData设置wxml数据>实现渲染
 
 # 数据来源的三种方式
 1. wxml
@@ -52,6 +53,7 @@ properties:{
 <!--使用  -->
 this.properties.like
 ```
+4. 组件的数据更新一定要使用this.setData()  不可以直接this.data.数据进行赋值
 
 # 微信小程序页面生命周期
 1. onLoad----------------监听页面加载
@@ -69,7 +71,7 @@ this.properties.like
 13. viewTap--------------事件响应函数
 
 # 微信小程序组件的生命周期(lifetimes)
-1. created      在组件实例刚刚被创建时执行	
+1. created      在组件实例刚刚被创建时执行	在里面不可以使用setData
 2. attached		在组件实例进入页面节点树时执行	
 3. ready		在组件在视图层布局完成后执行	
 4. moved		在组件实例被移动到节点树另一个位置时执行	
@@ -102,7 +104,30 @@ Component({
 2. 在es5一般用let that=this定义然后在回调函数内使用that
 3. 在es6一般可以使用箭头函数实现this指向
 
+
 # 小程序wx.request
 1. 请求回调,返回的结果码为多少都是回调成功的结果,在success里处理,在fail的回调里一般处理的是调用接口错误
 2. 通用错误异常处理可以集中处理,并且可以设置不同错误码和提示文字来进行提示
+3. 可以将wx.request进行封装,把错误处理集中解决,使用时即不需定义
 
+# 使用Model层进行数据处理
+1. 可以将请求的方法放在model层进行处理
+2. Model层的数据可以通过回调返回到页面调用上
+```
+<!-- Model -->
+class Person extends HTTP{
+	getList(Callback){
+		this.request({
+			url:'',
+			success:(res)=>{
+				callback(res)
+			}
+		})
+	}
+}
+<!-- page -->
+const data=new Person()	//实例化person类
+data.getList((res=>{	//把回调函数作为参数传到getList里面
+	this.setData({data:res})
+}))
+```
