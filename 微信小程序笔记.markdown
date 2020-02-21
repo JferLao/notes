@@ -131,3 +131,41 @@ data.getList((res=>{	//把回调函数作为参数传到getList里面
 	this.setData({data:res})
 }))
 ```
+
+
+# 小程序激活事件
+1. 通过this.triggerEvent('自定义事件名称,'{自定义属性,触发event.detail属性},{触发事件的选项})
+2. 页面可以通过bind:事件名进行监听
+3. 页面js对事件进行处理
+```
+<!-- 组件like.js -->
+this.triggerEvent('like',{behavior:'like'})
+
+<!-- 页面 -->
+<img bind:like="Onlike"/>
+
+onLike:function(event){
+	let like=event.detail.behavior
+}
+```
+
+# 小程序observer函数
+1. properties里的数据可以设置参数observer:function(newVal,oldVal,changePath)
+2. 把数据更新的检测放置在observer里处理
+3. 避免在properties的数据中对数据本身进行递归赋值更新,防止内存泄漏
+
+# 小程序behavior
+1. 小程序实现代码复用通过Behavior类
+```
+let Beh=Behavior({
+	propeties:{},
+	...
+})
+export {Beh}
+
+<!-- Components 中-->
+Component({
+	behaviors:[Beh]
+})
+
+```
