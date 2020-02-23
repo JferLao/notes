@@ -204,3 +204,9 @@ promise.then(
 ```
 4. promise有三种状态:pending(进行中),fulfilled(已成功),rejected(已失败),pending只能单向转变为fulfilled或者rejected
 5. promise解决回调地狱的方法:在promise内部return promise结果然后在外部结果再使用then()
+
+# wx:key使用
+1. 为wx:for列表的每个值指定一个唯一标识
+2. wx:key的标识需要为不重复打的数字或者字符串
+3. 正确写法:如果wx:for的数据为Object则wx:key="id"即可以直接使用item.id
+4. 正确写法2:如果wx:for的数据为数字或者字符串则可以直接使用wx:key="*this"
