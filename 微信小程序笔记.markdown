@@ -235,3 +235,31 @@ promise.then(
 2. 不传递slot则不会显示
 3. 外部传递只需要在标签添加属性slot="slotName"即可使用外部插入
 4. 需要在js文件中的options中设置multipleSlots:true才可以启用插槽
+
+
+# 小程序组件UI
+1. 小程序组件的外部样式可以通过Component的externalClasses属性进行定义
+2. 在externalClasses:[]数组内定义额外的外部样式class名字
+3. 对应外部样式通过css属性!important来进行覆盖
+
+
+# 文段的处理
+1. 获取到的数据换行符在转码前是"\\n"  所以得到的数据解码后返回的是内容\n,而不是换行符\n的作用
+2. 通过wxs文件内写wxs的函数,对内容进行处理,然后在wxml中使用对内容进行处理
+3. 在wxml导入wxs文件  
+```
+<wxs src="wxs文静路径" module="定义模块名称"/>
+<!-- 使用 -->
+<text decode="{{true}}">{{模块自定义名字.方法(处理对象)}}</text>
+```
+4. wxs不能使用es6的语法,它有自己独立的运行环境,仅仅是语法与JavaScript相似
+5. 在wxs对文本内容对换行字符进行正则处理
+```
+var format=function(text){
+	if(!text){
+		var reg=getRegExp('\\\\n','g')
+		return text.replace(reg,'\n&nbsp&nbsp&nbsp&nbsp')
+	}
+	
+}
+```
