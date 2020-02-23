@@ -179,3 +179,28 @@ Component({
 1. wx:if有更高的切换消耗而hidden有更高的初始渲染消耗
 2. 需要频繁切换的情境下,用hidden更好
 3. 如果运行时条件不大可能改变使用wx:if更好
+
+
+# JavaScript的Promise
+1. 代码风格比回调容易理解,避免出现回调地狱
+2. 多个异步等待合并
+3. Promise是一个对象(并不是一个函数),可以保存状态(函数在面向对象编程中是不可以保存状态的)
+```
+const promise =new Promise((resolve,reject)=>{
+	<!-- 异步代码写在promise中的箭头函数中 -->
+	wx.getSystemInfo({
+		sussess:(res)=>resolve(res)},
+		fail:(error)=>reject(error)
+	})
+})
+<!-- 执行回调函数 -->
+promise.then(
+(res)=>{
+	console.log(res)
+},
+(error)=>{
+	console.log(error)
+})
+```
+4. promise有三种状态:pending(进行中),fulfilled(已成功),rejected(已失败),pending只能单向转变为fulfilled或者rejected
+5. promise解决回调地狱的方法:在promise内部return promise结果然后在外部结果再使用then()
