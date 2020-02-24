@@ -311,3 +311,21 @@ properties:{
 # 空搜索结果的处理
 1. 设置判断值应该为请求结果的数组个数为0才为真,当个数大于0即不显示空搜索的显示字符串
 2. 注意空搜索结果要在对应情况取消显示
+
+
+# 授权
+1. 通过按钮授权
+```
+<button open-type="getUserInfo" bindgetuserinfo="geUserInfo">授权</button>
+
+getUserInfo(event){
+	//event.detail 即为用户的相关数据
+}
+```
+2. 通过wx.getUserInfo()接口
+```
+wx.getUserInfo({
+	success:data=>{}
+})
+```
+3. 通过wx.getSetting()获取用户是否有授权
