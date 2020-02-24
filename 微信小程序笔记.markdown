@@ -263,3 +263,15 @@ var format=function(text){
 	
 }
 ```
+
+# 微信加载状态
+1. 可以在onload()开始时执行wx.showLoading()加载层,增加用户体验感
+2. 再在单页面所有请求完成后执行wx.hideLoading()
+3. 利用promise对所有promise请求返回后使用all方法对promise子合集执行完成后执行then()/catch()
+``` 
+<!-- promise会等待花费时间最长的请求时间返回 -->
+Promise.all([promise1,promise2,promise3]).then(res=>{
+	wx.hideLoading()	
+	<!-- res返回的是一个数组,是每个promise返回值的合集 -->
+})
+```
