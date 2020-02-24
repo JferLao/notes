@@ -275,3 +275,34 @@ Promise.all([promise1,promise2,promise3]).then(res=>{
 	<!-- res返回的是一个数组,是每个promise返回值的合集 -->
 })
 ```
+
+
+# 微信小程序上拉加载
+1. 两种方法:使用scroll-view组件 或者page的生命周期的onReachBottom()方法
+2. 组件中不可以触发onReachBottom()方法
+3. 解决办法:在页面使用onReachBottom()方法,每当触发一次事件则通知组件一次
+4. 组件使用observe进行监听
+5. 使用wxs写随机字符串生成方法,把随机字符串保存在more中,使得每一次上拉加载都会改变值,组件的observe可以记录监听到使得触发响应
+6. 微信小程序加载数据是否有更多进行判断,如果返回的数据为空可以将直接返回
+```
+<!-- page -->
+onReachBottom({
+	this.setData({more:'用随机字符串'})		//用more做标记
+})
+<!-- 组件 -->
+properties:{
+	more:{
+		type:String,
+		observer:function(){}		//或者observe:'函数名'
+	}
+	
+}
+	
+```
+
+# 使用锁解决重复加载数据的问题
+1. 把多次请求强制约束一次只发送一次请求以减少服务器消耗,提高性能
+2. 在请求发送前通过变量设置为true进行,如果为true设置直接ruturn,当前面请求完成之后把变量赋值为false不执行return行为继续下一步请求
+
+# 微信小程序直接赋值和setData的区别
+1. 只有使用setData()才会通知wxml进行重绘,直接赋值不会重绘
