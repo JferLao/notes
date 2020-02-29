@@ -303,6 +303,22 @@ properties:{
 # 使用锁解决重复加载数据的问题
 1. 把多次请求强制约束一次只发送一次请求以减少服务器消耗,提高性能
 2. 在请求发送前通过变量设置为true进行,如果为true设置直接ruturn,当前面请求完成之后把变量赋值为false不执行return行为继续下一步请求
+```
+//   有更多数据加载
+            if (this.hasMore()) {
+                //   请求前解锁
+                this.locked()
+                    // 发送搜索请求
+                promise请求.then(res => {
+					<!--赋值操作  -->
+					//请求完先上锁
+						this.unLocked()
+                    }, () => {
+                        this.unLocked()
+                    })
+                    // 死锁
+}
+```
 
 # 微信小程序直接赋值和setData的区别
 1. 只有使用setData()才会通知wxml进行重绘,直接赋值不会重绘
